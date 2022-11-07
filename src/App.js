@@ -1,10 +1,13 @@
 
 import './App.css';
 import React, {useState,useEffect} from 'react';
+
+import { FaQuoteLeft, FaQuoteRight,FaTwitterSquare,FaGithub} from "react-icons/fa";
+
 const App=()=>{
            {
             const [quote, setQuote] = useState('');
-            
+            const [author,setAuthor] = useState('');
  
             useEffect(() =>{
               getQuote()
@@ -20,7 +23,7 @@ const App=()=>{
             let randomNumber =Math.floor(Math.random()*dataQuotes.length);
             let randomQuote=dataQuotes[randomNumber];
             setQuote(randomQuote.quote)
-            
+            setAuthor(randomQuote.author)
           }
           )
         }
@@ -28,29 +31,46 @@ const App=()=>{
     const handleClick=()=>{
       getQuote();
     }
-
+const shareTweet = ()=>
+{
+  //var url = "twitter.com";
+  let text = `"${quote}" -${author} #quotes`;
+  window.open(
+    "http://twitter.com/intent/tweet?url=" +
+     
+      
+      encodeURIComponent(text),
+    "_blank",
+   
+  );
+}
   
   
   
   return (
-    <div className="App">
+    <>
+  
      
+      <div className="App">
       
-      
-      <div className="container">
+                 <div id="quote-box">
        
-      <h1 className="quote">
-        <bold>"</bold>
-         {quote}
-         <bold>"</bold><br/>
-         
-      </h1>
-      
+                <h1 id="text">
+              <blockquote><FaQuoteLeft style={{color:'white'}}/> {quote} <FaQuoteRight style={{color:'white'}}/></blockquote>  
+                
+                <br/>
+                
+                
+              </h1>
+              <h4 id="author">{author}</h4>
+              <button onClick={handleClick} id="new-quote">New Quote</button>
+              <a className="twitter-hashtag-button" onClick={shareTweet} target="_top" href="twitter.com/intent/tweet"id="tweet-quote"><FaTwitterSquare color="black" size="2.5em"/></a>
       </div>
-      
-      <button onClick={handleClick} className="next">next quote</button>
-    </div>
-  );
+    <footer><a className="me" href="https://github.com/mednoor890"><FaGithub style={{position:"relative",top:"5px"}}color="white" size="1.3em"/>By Med Noor</a></footer>  
+      </div>
+   
+   
+    </>);
   }        
 }
 export default App ;
